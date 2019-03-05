@@ -11,6 +11,7 @@ CONFIG_FILE_LOCATION = os.path.expanduser('~/.config/pytodotxt.ini')
 
 DEFAULT_CONFIG = """[pytodotxt]
 TodoTxtFile=~/todo.txt
+ContextFilter=
 """
 
 
@@ -31,4 +32,6 @@ def parse_config() -> configparser.ConfigParser:
 def main():
     config = parse_config()
     todos = todotxt.read_file(config['TodoTxtFile'])
+    if config['ContextFilter']:
+        import ipdb; ipdb.set_trace()
     print(todos)

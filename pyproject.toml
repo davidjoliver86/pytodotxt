@@ -11,6 +11,7 @@ clint = "^0.5.1"
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
 flake8 = "^3.7"
+ipdb = "^0.11.0"
 
 [tool.poetry.scripts]
 todo = "pytodotxt.cli:main"
