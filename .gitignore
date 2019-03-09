@@ -1,0 +1,5 @@
+.coverage
+.tox/
+.vscode/
+pytodotxt.egg-info/
+__pycache__/
