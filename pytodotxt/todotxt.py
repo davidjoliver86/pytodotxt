@@ -29,6 +29,7 @@ class Todo:
 
     @completed.setter
     def completed(self, val):
+        self.__completed = val
         if val:
             if not self._raw.startswith('x '):
                 self._raw = 'x ' + self._raw

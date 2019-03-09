@@ -35,11 +35,10 @@ def print_todos(config: configparser.ConfigParser, todos: List[todotxt.Todo]):
         contexts = set([f'@{context}' for context in config['ContextFilter'].split(',')])
         todos = [todo for todo in todos if set(todo.contexts) & contexts]
     for todo in todos:
-        print(repr(todo))
+        print(todo)
 
 
 def main():
     config = parse_config()
     todos = todotxt.read_file(config['TodoTxtFile'])
     print_todos(config, todos)
-
