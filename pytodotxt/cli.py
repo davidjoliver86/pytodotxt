@@ -1,6 +1,7 @@
 import os
 import sys
 import configparser
+from typing import List
 
 from clint.textui import puts
 from clint.textui.colored import green, yellow
@@ -29,9 +30,16 @@ def parse_config() -> configparser.ConfigParser:
         sys.exit(0)
 
 
+def print_todos(config: configparser.ConfigParser, todos: List[todotxt.Todo]):
+    if config['ContextFilter']:
+        contexts = set([f'@{context}' for context in config['ContextFilter'].split(',')])
+        todos = [todo for todo in todos if set(todo.contexts) & contexts]
+    for todo in todos:
+        print(repr(todo))
+
+
 def main():
     config = parse_config()
     todos = todotxt.read_file(config['TodoTxtFile'])
-    if config['ContextFilter']:
-        import ipdb; ipdb.set_trace()
-    print(todos)
+    print_todos(config, todos)
+
