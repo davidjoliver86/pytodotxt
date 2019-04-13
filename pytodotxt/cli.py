@@ -3,8 +3,7 @@ import sys
 import configparser
 from typing import List
 
-from clint.textui import puts
-from clint.textui.colored import green, yellow
+import click
 
 from . import todotxt
 
@@ -23,8 +22,8 @@ def parse_config() -> configparser.ConfigParser:
             config.read_file(fp)
         return config['pytodotxt']
     except FileNotFoundError:
-        puts(yellow(f'Config file not found! Creating a default config at {CONFIG_FILE_LOCATION}.'))
-        puts(green('Please ensure your TodoTxtFile is correct, then run PyTodoTxt again.'))
+        click.secho(f'Config file not found! Creating a default config at {CONFIG_FILE_LOCATION}.', fg='yellow')
+        click.secho('Please ensure your TodoTxtFile is correct, then run PyTodoTxt again.', fg='green')
         with open(CONFIG_FILE_LOCATION, 'w') as fp:
             fp.write(DEFAULT_CONFIG)
         sys.exit(0)

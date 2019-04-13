@@ -2,7 +2,10 @@ import re
 from typing import List, AnyStr
 import pathlib
 
-from . import constants
+PRIORITY_REGEX = r'\(([A-Z])\)'
+
+CONTEXT = '@'
+PROJECT = '+'
 
 
 class Todo:
@@ -21,7 +24,7 @@ class Todo:
     def priority(self, val):
         self.__priority = val
         wrapped = f'({val})'
-        self._raw = re.sub(constants.PRIORITY_REGEX, wrapped, self._raw)
+        self._raw = re.sub(PRIORITY_REGEX, wrapped, self._raw)
 
     @property
     def completed(self):
@@ -39,24 +42,25 @@ class Todo:
 
     @property
     def contexts(self):
-        return [token for token in self._tokens if token.startswith(constants.CONTEXT)]
+        return [token for token in self._tokens if token.startswith(CONTEXT)]
 
     @property
     def projects(self):
-        return [token for token in self._tokens if token.startswith(constants.PROJECT)]
+        return [token for token in self._tokens if token.startswith(PROJECT)]
 
     def __repr__(self):
         return self._raw
 
     def __init__(self, val):
-        self._raw = val.strip()
+        self._raw = val
         self._tokens: List[AnyStr] = val.split()
         priority_token_index = 0
         if self._tokens[0] == 'x':
             self.completed = True
             priority_token_index = 1
-        if re.match(constants.PRIORITY_REGEX, self._tokens[priority_token_index]):
-            self.priority = self._tokens[priority_token_index][1]
+        match = re.match(PRIORITY_REGEX, self._tokens[priority_token_index])
+        if match:
+            self.priority = match.group(1)
 
 
 def read_file(filename) -> List[Todo]:
