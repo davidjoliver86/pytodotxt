@@ -17,9 +17,32 @@ def test_mark_complete():
     assert repr(todo) == 'x task that will be completed'
 
 
-def test_priority():
+def test_priority_identity():
     todo = Todo('(A) task with priority')
-    assert todo.priority == 'A'
+    assert repr(todo) == '(A) task with priority'
+
+
+def test_priority_unset():
+    todo = Todo('(A) task with priority')
+    assert repr(todo)
+
+
+def test_set_priority_from_none():
+    todo = Todo('i need a priority')
+    todo.priority = 'A'
+    assert repr(todo) == '(A) i need a priority'
+
+
+def test_replace_priority():
+    todo = Todo('(A) im getting my priority replaced')
+    todo.priority = 'B'
+    assert repr(todo) == '(B) im getting my priority replaced'
+
+
+def test_unset_priority():
+    todo = Todo('(A) im losing my priority')
+    todo.priority = None
+    assert repr(todo) == 'im losing my priority'
 
 
 def test_contexts():
