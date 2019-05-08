@@ -1,4 +1,7 @@
-from pytodotxt.todotxt import Todo
+from pytodotxt import todotxt
+from functools import partial
+
+Todo = partial(todotxt.Todo, 1)
 
 
 def test_todo_identity():

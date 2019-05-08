@@ -16,6 +16,27 @@ class Todo:
     contexts = []
     projects = []
 
+    def __repr__(self):
+        return f'Todo<id={self._id}, text={self.text}>'
+
+    def __init__(self, _id, val):
+        self._id = _id
+        self._raw = val
+        tokens: List[AnyStr] = val.split()
+        if tokens[0] == 'x':
+            self.completed = True
+        found_priority = re.search(PRIORITY_REGEX, self._raw)
+        if found_priority:
+            self.priority = found_priority.group(1)
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def text(self):
+        return self._raw.strip()
+
     @property
     def priority(self):
         return self.__priority
@@ -55,19 +76,6 @@ class Todo:
     @property
     def projects(self):
         return [token for token in self._raw.split() if token.startswith(PROJECT)]
-
-    def __repr__(self):
-        return self._raw.strip()
-
-    def __init__(self, _id, val):
-        self._id = _id
-        self._raw = val
-        tokens: List[AnyStr] = val.split()
-        if tokens[0] == 'x':
-            self.completed = True
-        found_priority = re.search(PRIORITY_REGEX, self._raw)
-        if found_priority:
-            self.priority = found_priority.group(1)
 
 
 def read_file(filename) -> List[Todo]:
