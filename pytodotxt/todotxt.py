@@ -71,13 +71,17 @@ class Todo:
 
     @property
     def contexts(self):
-        return [token for token in self._raw.split() if token.startswith(CONTEXT)]
+        return sorted([token for token in self._raw.split() if token.startswith(CONTEXT)])
 
     @property
     def projects(self):
-        return [token for token in self._raw.split() if token.startswith(PROJECT)]
+        return sorted([token for token in self._raw.split() if token.startswith(PROJECT)])
 
 
 def read_file(filename) -> List[Todo]:
+    """
+    Reads the todo file and returns a list of Todos.
+    The "id" of each todo refers to the zero-indexed line number of that todo.
+    """
     with pathlib.Path(filename).expanduser().open('r') as fp:
         return [Todo(_id, line) for _id, line in enumerate(fp)]

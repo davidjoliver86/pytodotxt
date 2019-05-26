@@ -8,7 +8,16 @@ DEFAULT_CONFIG = """[pytodotxt]
 todo_file = ~/todo.txt
 """
 
+# Configs
+
+
+TODO_FILE = ''
+SORT_ORDER = 'none'
+
+
 def load_from_file(config_path: str) -> None:
+    """
+    """
     if config_path:
         config_path = Path(config_path).expanduser()
     else:
@@ -22,7 +31,3 @@ def load_from_file(config_path: str) -> None:
     for section in parser.sections():
         for key in parser[section]:
             globals()[key.upper()] = parser[section][key]
-
-# Configs
-
-TODO_FILE = ''
